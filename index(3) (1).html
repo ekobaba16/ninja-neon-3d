@@ -1,0 +1,2974 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Neon Ninja Runner 3D - 3D Ninja Koşu Oyunu</title>
+<meta name="description" content="Neon Ninja Runner 3D, neon ışıklı şehirde ninja olarak koştuğun, engellerden kaçtığın, coin topladığın ve hamam böcekleriyle savaştığın ücretsiz 3D tarayıcı oyunudur.">
+<meta name="keywords" content="Neon Ninja Runner 3D, Ninja Neon Runner 3D, neon ninja oyunu, 3D ninja oyunu, online ninja oyunu, ücretsiz 3D oyun, tarayıcı oyunu">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ekobaba16.github.io/neon-n-nja-runner-3d/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Neon Ninja Runner 3D - 3D Ninja Koşu Oyunu">
+<meta property="og:description" content="Neon ışıklı şehirde ninja olarak koş, coin topla, engellerden kaç ve hamam böcekleriyle savaş. Ücretsiz 3D tarayıcı oyunu.">
+<meta property="og:url" content="https://ekobaba16.github.io/neon-n-nja-runner-3d/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neon Ninja Runner 3D">
+<meta name="twitter:description" content="Neon ışıklı şehirde geçen ücretsiz 3D ninja koşu oyunu.">
+<meta name="theme-color" content="#02040b">
+<meta name="author" content="Ekobaba16">
+<meta property="og:site_name" content="Neon Ninja Runner 3D">
+<meta property="og:locale" content="tr_TR">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://ekobaba16.github.io/neon-n-nja-runner-3d/sitemap.xml">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"VideoGame",
+  "name":"Neon Ninja Runner 3D",
+  "url":"https://ekobaba16.github.io/neon-n-nja-runner-3d/",
+  "description":"Neon ışıklı şehirde ninja olarak koştuğun, engellerden kaçtığın, coin topladığın ve hamam böcekleriyle savaştığın ücretsiz 3D tarayıcı oyunu.",
+  "genre":["Action","Runner","Arcade"],
+  "applicationCategory":"Game",
+  "operatingSystem":"Web Browser",
+  "inLanguage":"tr",
+  "playMode":"SinglePlayer"
+}
+</script>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+#seoContent{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#02040b;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+canvas{
+    display:block;
+}
+
+#hud{
+    position:fixed;
+    top:15px;
+    left:15px;
+    z-index:10;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    pointer-events:none;
+}
+
+.stat{
+    min-width:145px;
+    padding:8px 12px;
+    border-radius:9px;
+    background:rgba(3,8,18,.72);
+    border:1px solid rgba(0,220,255,.55);
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    text-shadow:0 0 8px #00d9ff;
+    backdrop-filter:blur(5px);
+}
+
+#speed{
+    color:#00ffb7;
+}
+
+#menu,
+#gameOver,
+#pause{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at center,
+        rgba(0,190,255,.10),
+        rgba(0,0,0,.93));
+}
+
+#gameOver,
+#pause{
+    display:none;
+}
+
+.panel{
+    width:min(92%,500px);
+    padding:35px;
+    text-align:center;
+    border:1px solid #00d9ff;
+    border-radius:24px;
+    background:rgba(3,7,18,.92);
+    box-shadow:
+        0 0 40px rgba(0,220,255,.3),
+        inset 0 0 30px rgba(0,220,255,.04);
+}
+
+.title{
+    font-size:48px;
+    font-weight:900;
+    letter-spacing:5px;
+    color:#00eaff;
+    text-shadow:
+        0 0 8px #00eaff,
+        0 0 30px #008cff;
+}
+
+.subtitle{
+    color:#ff267f;
+    font-size:17px;
+    margin:8px 0 28px;
+    letter-spacing:3px;
+}
+
+.mainButton{
+    padding:15px 42px;
+    border:0;
+    border-radius:12px;
+    background:#00d9ff;
+    color:#001016;
+    font-size:19px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 0 25px rgba(0,220,255,.55);
+}
+
+.mainButton:hover{
+    transform:scale(1.04);
+}
+
+.help{
+    color:#aaa;
+    line-height:1.8;
+    margin-top:20px;
+    font-size:14px;
+}
+
+#gameOver .title{
+    color:#ff246d;
+    text-shadow:0 0 20px #ff246d;
+}
+
+.result{
+    color:white;
+    font-size:19px;
+    line-height:1.9;
+    margin:15px 0 20px;
+}
+
+
+.pauseMenuGrid{display:grid;grid-template-columns:repeat(2,minmax(140px,1fr));gap:10px;margin-top:14px}.pauseMenuBtn{font-size:14px;padding:11px 12px}.pauseMenuGrid .pauseMenuBtn{margin:0}@media(max-width:520px){.pauseMenuGrid{grid-template-columns:1fr}}
+.lobbyHero{display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:center;margin:10px 0 18px;padding:16px;border:1px solid rgba(255,38,127,.35);border-radius:16px;background:linear-gradient(135deg,rgba(255,38,127,.10),rgba(0,220,255,.08))}
+.lobbyAvatar{width:110px;height:140px;border:1px solid rgba(0,220,255,.4);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:72px;background:rgba(3,7,18,.8);box-shadow:0 0 25px rgba(0,220,255,.18)}
+.lobbyInfo{text-align:left}.lobbyInfo b{color:#00eaff;font-size:20px}.lobbyInfo p{color:#9ab;line-height:1.5;margin:7px 0 0}
+.lobbySection{margin-top:16px}.lobbySection h3{margin:0 0 9px;color:#00eaff}.lobbyGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.lobbyItem{border:1px solid rgba(0,220,255,.22);background:rgba(10,18,32,.85);padding:9px;border-radius:12px;color:#fff}.lobbyItem button{margin-top:7px;width:100%;padding:7px;border:0;border-radius:8px;background:#00d9ff;font-weight:800;cursor:pointer}.lobbyItem.active{border-color:#ff267f;box-shadow:0 0 14px rgba(255,38,127,.2)}
+@media(max-width:520px){.lobbyHero{grid-template-columns:1fr;text-align:center}.lobbyInfo{text-align:center}}
+
+#pause .title{
+    color:#ff267f;
+}
+
+#mobile{
+    position:fixed;
+    bottom:18px;
+    left:0;
+    right:0;
+    z-index:20;
+    display:flex;
+    justify-content:space-between;
+    padding:0 18px;
+    pointer-events:none;
+}
+
+.mobileSide{
+    display:flex;
+    gap:12px;
+}
+
+.touchButton{
+    width:68px;
+    height:68px;
+    border-radius:50%;
+    border:2px solid #00d9ff;
+    background:rgba(0,15,28,.72);
+    color:#00eaff;
+    font-size:26px;
+    font-weight:bold;
+    box-shadow:0 0 15px rgba(0,220,255,.35);
+    pointer-events:auto;
+    touch-action:none;
+}
+
+.touchButton:active{
+    transform:scale(.92);
+    background:rgba(0,220,255,.22);
+}
+
+@media(max-width:600px){
+    .title{
+        font-size:35px;
+    }
+
+    .panel{
+        padding:25px;
+    }
+
+    .stat{
+        min-width:125px;
+        font-size:13px;
+    }
+}
+
+/* ===== FULL UPDATE UI ===== */
+#topButtons{position:fixed;top:15px;right:15px;z-index:30;display:flex;gap:8px}
+.iconBtn{border:1px solid #00d9ff;background:rgba(3,8,18,.78);color:#00eaff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800;box-shadow:0 0 15px rgba(0,220,255,.22)}
+#shop,#lobby,#settings,#missions,#daily{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.86);backdrop-filter:blur(7px)}
+.overlayPanel{width:min(94%,900px);max-height:90vh;overflow:auto;padding:26px;border:1px solid #00d9ff;border-radius:22px;background:rgba(3,7,18,.96);box-shadow:0 0 45px rgba(0,220,255,.22)}
+.overlayPanel h2{color:#00eaff;margin-bottom:12px}
+.shopGrid,.missionGrid,.dailyGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.shopCard,.missionCard,.dailyCard{border:1px solid rgba(0,220,255,.28);background:rgba(10,18,32,.85);padding:12px;border-radius:13px;color:#fff}
+.shopCard button,.dailyCard button{margin-top:8px;width:100%;padding:8px;border:0;border-radius:8px;background:#00d9ff;font-weight:800;cursor:pointer}
+.shopCard button:disabled,.dailyCard button:disabled{opacity:.45;cursor:not-allowed}
+.swatch{width:30px;height:30px;border-radius:50%;display:inline-block;margin:2px;border:2px solid #fff}
+.progress{height:8px;background:#172334;border-radius:10px;overflow:hidden;margin-top:8px}.progress>i{display:block;height:100%;background:#00eaff}
+.claimTaskBtn{display:none}.claimTaskBtn.ready{display:block;width:100%;margin-top:8px;padding:8px;border:0;border-radius:8px;background:#ffd000;color:#111;font-weight:900;cursor:pointer}.closeBtn{float:right;background:#ff267f;color:white;border:0;border-radius:8px;padding:7px 12px;cursor:pointer}
+#toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:100;background:rgba(0,0,0,.85);border:1px solid #00eaff;color:#fff;padding:12px 18px;border-radius:12px;font-weight:800;transition:.25s}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#recep{position:fixed;left:50%;top:24%;transform:translateX(-50%) scale(.8);opacity:0;z-index:90;color:#ffd33d;font-size:32px;font-weight:900;text-shadow:0 0 12px #ff8a00,0 0 28px #ff267f;pointer-events:none;transition:.25s}
+#recep.show{opacity:1;transform:translateX(-50%) scale(1)}
+#shopHint{color:#9ab;margin-bottom:12px}
+.settingRow{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #18263a;color:#fff}
+@media(max-width:600px){#topButtons{top:8px;right:8px}.iconBtn{padding:7px 8px;font-size:11px}.overlayPanel{padding:18px}}
+
+</style>
+</head>
+
+<body>
+<main id="seoContent" aria-label="Neon Ninja Runner 3D hakkında">
+  <h1>Neon Ninja Runner 3D</h1>
+  <p>Neon Ninja Runner 3D, neon ışıklı bir şehirde geçen ücretsiz 3D ninja koşu oyunudur. Koş, şerit değiştir, zıpla, coin topla, engellerden kaç ve hamam böceklerini kılıcınla yen.</p>
+</main>
+
+<div id="hud">
+
+    <div class="stat">
+        ❤️ CAN:
+        <span id="health">3</span>
+    </div>
+
+    <div class="stat">
+        🪙 COIN:
+        <span id="coins">0</span>
+    </div>
+
+    <div class="stat totalCoinStat">
+        💰 TOPLAM:
+        <span id="totalCoins">0</span>
+    </div>
+
+    <div class="stat">
+        ⭐ SKOR:
+        <span id="score">0</span>
+    </div>
+
+    <div class="stat">
+        📏 MESAFE:
+        <span id="distance">0</span> m
+    </div>
+
+    <div class="stat">
+        ⚡ HIZ:
+        <span id="speed">1.0</span>
+    </div>
+
+</div>
+
+
+<div id="menu">
+
+    <div class="panel">
+
+        <div class="title">NINJA</div>
+
+        <div class="subtitle">
+            NEON RUNNER 3D
+        </div>
+
+        <button
+            id="startButton"
+            class="mainButton">
+            OYUNA BAŞLA
+        </button>
+
+        <div class="help">
+            A / D veya ← / → : Şerit değiştir<br>
+            W / SPACE / ↑ : Zıpla<br>
+            P : Duraklat
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="pause">
+
+    <div class="panel">
+
+        <div class="title">
+            DURAKLATILDI
+        </div>
+
+        <br>
+
+        <button id="resumeButton" class="mainButton">▶ DEVAM ET</button>
+
+        <div class="pauseMenuGrid">
+            <button class="mainButton pauseMenuBtn" id="pauseLobbyButton">🥷 NINJA LOBİSİ</button>
+            <button class="mainButton pauseMenuBtn" id="pauseShopButton">🛍️ DÜKKAN</button>
+            <button class="mainButton pauseMenuBtn" id="pauseMissionButton">🎯 GÖREVLER</button>
+            <button class="mainButton pauseMenuBtn" id="pauseRewardButton">🎁 ÖDÜLLER</button>
+            <button class="mainButton pauseMenuBtn" id="pauseSettingsButton">⚙️ AYARLAR</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="gameOver">
+
+    <div class="panel">
+
+        <div class="title">
+            OYUN BİTTİ
+        </div>
+
+        <div
+            id="result"
+            class="result">
+        </div>
+
+        <button
+            id="restartButton"
+            class="mainButton">
+            TEKRAR OYNA
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<div id="topButtons">
+  <button class="iconBtn" id="shopButton">🛍️ DÜKKAN</button>
+  <button class="iconBtn" id="missionButton">🎯 GÖREV</button>
+  <button class="iconBtn" id="dailyButton">🎁 ÖDÜL</button>
+  <button class="iconBtn" id="pauseButton">⏸ DURDUR</button>
+  <button class="iconBtn" id="settingsButton">⚙️ AYAR</button>
+</div>
+
+<div id="lobby">
+ <div class="overlayPanel">
+  <button class="closeBtn" onclick="closeOverlay('lobby')">KAPAT</button>
+  <h2>🥷 NINJA LOBİSİ</h2>
+  <div class="lobbyHero">
+   <div class="lobbyAvatar" id="lobbyAvatar">🥷</div>
+   <div class="lobbyInfo">
+    <b>KARAKTERİNİ AYARLA</b>
+    <p>Kostümünü, şapkanı, ayakkabını ve kılıcını buradan kuşan. Değişiklikler oyundaki ninjaya hemen uygulanır.</p>
+    <div id="lobbyCoins" style="margin-top:9px;color:#ffd000;font-weight:900">🪙 Coin: 0</div>
+   </div>
+  </div>
+  <div class="lobbySection"><h3>🎨 KOSTÜM</h3><div id="lobbyCostumeGrid" class="lobbyGrid"></div></div>
+  <div class="lobbySection"><h3>🧢 ŞAPKA</h3><div id="lobbyHatGrid" class="lobbyGrid"></div></div>
+  <div class="lobbySection"><h3>👟 AYAKKABI</h3><div id="lobbyShoeGrid" class="lobbyGrid"></div></div>
+  <div class="lobbySection"><h3>⚔️ KILIÇ</h3><div id="lobbySwordGrid" class="lobbyGrid"></div></div>
+ </div>
+</div>
+
+<div id="shop">
+ <div class="overlayPanel">
+  <button class="closeBtn" onclick="closeOverlay('shop')">KAPAT</button>
+  <h2>🛍️ NINJA DÜKKANI</h2>
+   <div id="shopCoinBalance" style="margin:10px 0 14px;padding:12px 16px;border:1px solid #ffd000;border-radius:12px;background:rgba(255,208,0,.10);color:#ffd000;font-size:20px;font-weight:900;text-align:center;box-shadow:0 0 18px rgba(255,208,0,.18)">
+     🪙 COIN BAKİYESİ: <span id="shopCoins">0</span>
+   </div>
+  <div id="shopHint">Aksesuarlar 100 🪙 • Kostümler 250 🪙 • Kılıçlar 250 🪙</div>
+  <h3 style="color:#00eaff">🎨 Kostüm / Renkler</h3>
+  <div id="costumeGrid" class="shopGrid"></div>
+  <h3 style="color:#00eaff;margin-top:18px">🧢 Şapkalar</h3>
+  <div id="hatGrid" class="shopGrid"></div>
+  <h3 style="color:#00eaff;margin-top:18px">👟 Ayakkabılar</h3>
+  <div id="shoeGrid" class="shopGrid"></div>
+  <h3 style="color:#00eaff;margin-top:18px">⚔️ Kılıçlar</h3>
+  <div id="swordGrid" class="shopGrid"></div>
+ </div>
+</div>
+
+<div id="missions">
+ <div class="overlayPanel">
+  <button class="closeBtn" onclick="closeOverlay('missions')">KAPAT</button>
+  <h2>🎯 GÜNLÜK / HAFTALIK GÖREVLER</h2>
+  <div id="missionGrid" class="missionGrid"></div>
+ </div>
+</div>
+
+<div id="daily">
+ <div class="overlayPanel">
+  <button class="closeBtn" onclick="closeOverlay('daily')">KAPAT</button>
+  <h2>🎁 GÜNLÜK ÖDÜL</h2>
+  <div id="dailyGrid" class="dailyGrid"></div>
+ </div>
+</div>
+
+<div id="settings">
+ <div class="overlayPanel">
+  <button class="closeBtn" onclick="closeOverlay('settings')">KAPAT</button>
+  <h2>⚙️ AYARLAR</h2>
+  <div class="settingRow"><span>🎵 Müzik</span><input id="musicVolume" type="range" min="0" max="1" step=".05" value=".35"></div>
+  <div class="settingRow"><span>🔊 Efekt sesi</span><input id="sfxVolume" type="range" min="0" max="1" step=".05" value=".8"></div>
+  <div class="settingRow"><span>💡 Neon ışık yoğunluğu</span><input id="neonIntensity" type="range" min=".2" max="2" step=".1" value="1"></div>
+  <p style="color:#9ab;margin-top:16px">Arka plan müziği için kendi MP3 dosyanı sayfaya ekleyebilirsin. Dosya yoksa oyun sessiz çalışır.</p>
+  <input id="musicFile" type="file" accept="audio/*" style="margin-top:10px;color:white">
+ </div>
+</div>
+
+<div id="toast"></div>
+<div id="recep">HELAL OLSUN DİVA!</div>
+
+<div id="mobile">
+
+    <div class="mobileSide">
+
+        <button
+            id="leftButton"
+            class="touchButton">
+            ◀
+        </button>
+
+        <button
+            id="rightButton"
+            class="touchButton">
+            ▶
+        </button>
+
+    </div>
+
+    <div class="mobileSide">
+
+        <button
+            id="jumpButton"
+            class="touchButton">
+            ⬆
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+
+"use strict";
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+let scene;
+let camera;
+let renderer;
+let clock;
+
+let player;
+
+let roadSegments = [];
+let obstacles = [];
+let coins = [];
+let buildings = [];
+let particles = [];
+
+let gameState = "menu";
+
+let health = 3;
+let coinCount = 0;
+let score = 0;
+let distance = 0;
+
+let lane = 1;
+
+const laneX = [-3.2, 0, 3.2];
+
+let targetX = 0;
+
+let verticalVelocity = 0;
+let grounded = true;
+
+let gameSpeed = 0.42;
+
+let obstacleTimer = 0;
+let coinTimer = 0;
+let buildingTimer = 0;
+
+let hitCooldown = 0;
+
+let animationTime = 0;
+
+/* FPS OPTIMIZATION: UI/localStorage work is throttled instead of running every frame. */
+let hudTimer = 0;
+let taskTimer = 0;
+
+const tempBox1 = new THREE.Box3();
+const tempBox2 = new THREE.Box3();
+
+/* MOBILE PERFORMANCE PROFILE */
+const PERF = {
+    mobile: window.matchMedia("(max-width: 900px), (pointer: coarse)").matches,
+    lowEnd: ((navigator.hardwareConcurrency || 4) <= 4) || ((navigator.deviceMemory || 4) <= 4),
+    pixelRatio: 1, fpsTimer: 0, fpsFrames: 0
+};
+PERF.lowPower = PERF.mobile && PERF.lowEnd;
+PERF.pixelRatio = PERF.lowPower ? 0.72 : (PERF.mobile ? 0.85 : Math.min(window.devicePixelRatio || 1, 1.15));
+
+
+/* =====================================================
+   MATERIALS
+===================================================== */
+
+const materials = {
+
+    road:
+        new THREE.MeshStandardMaterial({
+            color:0x11151d,
+            roughness:.88,
+            metalness:.15
+        }),
+
+    roadLine:
+        new THREE.MeshBasicMaterial({
+            color:0x00dfff
+        }),
+
+    dark:
+        new THREE.MeshStandardMaterial({
+            color:0x080b11,
+            roughness:.6,
+            metalness:.25
+        }),
+
+    ninja:
+        new THREE.MeshStandardMaterial({
+            color:0x07090c,
+            roughness:.45,
+            metalness:.2
+        }),
+
+    red:
+        new THREE.MeshBasicMaterial({
+            color:0xff155f
+        }),
+
+    blade:
+        new THREE.MeshStandardMaterial({
+            color:0xe8f7ff,
+            metalness:1,
+            roughness:.12
+        }),
+
+    gold:
+        new THREE.MeshStandardMaterial({
+            color:0xffc400,
+            emissive:0x553800,
+            emissiveIntensity:.8,
+            metalness:.8,
+            roughness:.2
+        }),
+
+    obstacle:
+        new THREE.MeshStandardMaterial({
+            color:0x291225,
+            emissive:0x5d0635,
+            emissiveIntensity:.5,
+            roughness:.6
+        })
+
+};
+
+
+
+/* =====================================================
+   FULL UPDATE SYSTEM
+===================================================== */
+const SAVE_KEY = "ninjaNeonRunnerSaveV3";
+let saveData = {
+  bankCoins:0, ownedCostumes:[0], ownedHats:[0], ownedShoes:[0], ownedSwords:[0],
+  costume:0, hat:0, shoe:0, sword:0, dailyClaim:"", musicVolume:.35, sfxVolume:.8,
+  tasks:{}, lastTaskDay:"", lastWeek:""
+};
+let audioCtx = null, musicAudio = null;
+let selectedCostume = 0, selectedHat = 0, selectedShoe = 0, selectedSword = 0;
+let neonLevel = 0;
+let streetLights = [], shopSigns = [], roaches = [], swordParts = [];
+let milestoneShown = {};
+let attackCooldown = 0, attackTimer = 0;
+let taskState = {distance:0, coins:0, kills:0, score:0};
+
+function loadSave(){
+  try{ Object.assign(saveData, JSON.parse(localStorage.getItem(SAVE_KEY)||"{}")); }catch(e){}
+  if(!Array.isArray(saveData.ownedCostumes)) saveData.ownedCostumes=[0];
+  if(!Array.isArray(saveData.ownedHats)) saveData.ownedHats=[0];
+  if(!Array.isArray(saveData.ownedShoes)) saveData.ownedShoes=[0];
+  if(!Array.isArray(saveData.ownedSwords)) saveData.ownedSwords=[0];
+}
+function persist(){ localStorage.setItem(SAVE_KEY, JSON.stringify(saveData)); }
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+function weekKey(){ const d=new Date(), one=new Date(d); one.setDate(d.getDate()-((d.getDay()+6)%7)); return one.toISOString().slice(0,10); }
+function toast(t){const el=document.getElementById("toast");el.textContent=t;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),1800)}
+let overlayFromPause = false;
+function closeOverlay(id){
+  const el=document.getElementById(id);
+  if(el) el.style.display="none";
+  if(overlayFromPause && gameState==="paused"){
+    overlayFromPause=false;
+    document.getElementById("pause").style.display="flex";
+  }
+}
+function openOverlay(id){document.getElementById(id).style.display="flex"}
+
+function saveBankCoins(){
+  saveData.bankCoins = Math.max(0, (saveData.bankCoins||0) + coinCount);
+  coinCount=0;
+  persist();
+  updateHUD();
+}
+
+const costumes = [
+ "#10131a","#ff174f","#00e5ff","#7c4dff","#00e676","#ffd600","#ff6d00","#f50057",
+ "#18ffff","#ffffff","#212121","#76ff03","#651fff","#ff4081","#00b8d4"
+];
+const hats = ["🎩","🧢","⛑️","👒","🎓","🤠","👑","🪖","🎭","🧙"];
+const shoes = ["🥾","👟","👞","🩴","🥷","👢","🛼","⛸️","🚀","⚡"];
+const swords = ["⚔️","🗡️","🔷","🔶","🌈","🔥","❄️","⚡","🌌","☠️"];
+
+function itemCard(title, sub, cost, owned, action){
+ return `<div class="shopCard"><b>${title}</b><div style="margin-top:5px;color:#9ab">${sub}</div><button onclick="${action}">${owned?"KUŞAN":"SATIN AL • "+cost+" 🪙"}</button></div>`;
+}
+function updateShopCoinDisplay(){
+  const el=document.getElementById("shopCoins");
+  if(el) el.textContent=(saveData.bankCoins||0)+coinCount;
+}
+
+function renderShop(){
+ const cg=document.getElementById("costumeGrid"), hg=document.getElementById("hatGrid"), sg=document.getElementById("shoeGrid"), sw=document.getElementById("swordGrid");
+ cg.innerHTML=costumes.map((c,i)=>`<div class="shopCard"><span class="swatch" style="background:${c};box-shadow:0 0 15px ${c}"></span><br><b>Kostüm ${i+1}</b><button onclick="buyOrEquip('costume',${i},250)">${saveData.ownedCostumes.includes(i)?"KUŞAN":"SATIN AL • 250 🪙"}</button></div>`).join("");
+ hg.innerHTML=hats.map((x,i)=>itemCard(x,"Şapka "+(i+1),100,saveData.ownedHats.includes(i),`buyOrEquip('hat',${i},100)`)).join("");
+ sg.innerHTML=shoes.map((x,i)=>itemCard(x,"Ayakkabı "+(i+1),100,saveData.ownedShoes.includes(i),`buyOrEquip('shoe',${i},100)`)).join("");
+ sw.innerHTML=swords.map((x,i)=>itemCard(x,"Kılıç "+(i+1),250,saveData.ownedSwords.includes(i),`buyOrEquip('sword',${i},250)`)).join("");
+}
+function renderLobby(){
+ const cg=document.getElementById("lobbyCostumeGrid"), hg=document.getElementById("lobbyHatGrid"), sg=document.getElementById("lobbyShoeGrid"), sw=document.getElementById("lobbySwordGrid");
+ const coinEl=document.getElementById("lobbyCoins");
+ if(coinEl) coinEl.textContent="🪙 Coin: "+((saveData.bankCoins||0)+coinCount);
+ const avatar=document.getElementById("lobbyAvatar");
+ if(avatar){
+   avatar.textContent=hats[saveData.hat||0]||"🥷";
+   avatar.style.background=costumes[saveData.costume||0];
+   avatar.style.boxShadow="0 0 28px "+costumes[saveData.costume||0];
+ }
+ cg.innerHTML=costumes.map((c,i)=>`<div class="lobbyItem ${saveData.costume===i?"active":""}"><span class="swatch" style="background:${c};box-shadow:0 0 12px ${c}"></span><br><b>Kostüm ${i+1}</b><button onclick="buyOrEquip('costume',${i},250);renderLobby()">${saveData.ownedCostumes.includes(i)?(saveData.costume===i?"KUŞANILDI":"KUŞAN"):("SATIN AL • 250 🪙")}</button></div>`).join("");
+ hg.innerHTML=hats.map((x,i)=>`<div class="lobbyItem ${saveData.hat===i?"active":""}"><div style="font-size:30px">${x}</div><b>Şapka ${i+1}</b><button onclick="buyOrEquip('hat',${i},100);renderLobby()">${saveData.ownedHats.includes(i)?(saveData.hat===i?"KUŞANILDI":"KUŞAN"):("SATIN AL • 100 🪙")}</button></div>`).join("");
+ sg.innerHTML=shoes.map((x,i)=>`<div class="lobbyItem ${saveData.shoe===i?"active":""}"><div style="font-size:30px">${x}</div><b>Ayakkabı ${i+1}</b><button onclick="buyOrEquip('shoe',${i},100);renderLobby()">${saveData.ownedShoes.includes(i)?(saveData.shoe===i?"KUŞANILDI":"KUŞAN"):("SATIN AL • 100 🪙")}</button></div>`).join("");
+ sw.innerHTML=swords.map((x,i)=>`<div class="lobbyItem ${saveData.sword===i?"active":""}"><div style="font-size:30px">${x}</div><b>Kılıç ${i+1}</b><button onclick="buyOrEquip('sword',${i},250);renderLobby()">${saveData.ownedSwords.includes(i)?(saveData.sword===i?"KUŞANILDI":"KUŞAN"):("SATIN AL • 250 🪙")}</button></div>`).join("");
+}
+function buyOrEquip(type,i,cost){
+ const key=type==="costume"?"ownedCostumes":type==="hat"?"ownedHats":type==="shoe"?"ownedShoes":"ownedSwords";
+ if(!saveData[key].includes(i)){
+   if(saveData.bankCoins<cost){toast("Coin yetmiyor!");return}
+   saveData.bankCoins-=cost;saveData[key].push(i);toast("Satın alındı!");
+ }
+ saveData[type]=i;persist();applyCosmetics();updateHUD();renderShop();
+}
+function clearCosmetics(){
+  if(!player)return;
+  const remove=[];
+  player.traverse(o=>{ if(o.userData.cosmetic && o!==player) remove.push(o); });
+  remove.forEach(o=>o.parent && o.parent.remove(o));
+}
+function cosmeticMat(color, metal=.2, rough=.45){
+  return new THREE.MeshStandardMaterial({color,metalness:metal,roughness:rough});
+}
+function applyCosmetics(){
+  if(!player)return;
+  clearCosmetics();
+  const color=new THREE.Color(costumes[saveData.costume||0]);
+  player.traverse(o=>{
+    if(o.isMesh && o.userData.ninjaBody) o.material.color.copy(color);
+  });
+
+  // Detaylı maske/omuz zırhı ve kemer
+  const belt=new THREE.Mesh(new THREE.BoxGeometry(1.28,.16,.78),cosmeticMat(0x111827,.55,.3));
+  belt.position.set(0,1.03,0); belt.userData.cosmetic=true; player.add(belt);
+  const buckle=new THREE.Mesh(new THREE.BoxGeometry(.22,.22,.05),cosmeticMat(0xffd54a,.8,.2));
+  buckle.position.set(0,1.03,-.41); buckle.userData.cosmetic=true; player.add(buckle);
+  [-1,1].forEach(side=>{
+    const shoulder=new THREE.Mesh(new THREE.BoxGeometry(.38,.18,.72),cosmeticMat(color.clone().offsetHSL(0,0,-.12),.35,.35));
+    shoulder.position.set(side*.67,1.98,0); shoulder.rotation.z=side*.12; shoulder.userData.cosmetic=true; player.add(shoulder);
+  });
+
+  // Şapka/baş aksesuarı
+  const hatIndex=saveData.hat||0;
+  const hatColors=[0x111827,0x263238,0x8b1e3f,0x5b3a29,0x374151,0x7c4a21,0xd4af37,0x1f2937,0x5b21b6,0x0f766e];
+  const hat=new THREE.Mesh(new THREE.CylinderGeometry(.48,.58,.18,18),cosmeticMat(hatColors[hatIndex%hatColors.length],.45,.3));
+  hat.position.y=3.10; hat.userData.cosmetic=true; player.add(hat);
+  if(hatIndex%3===1){
+    const brim=new THREE.Mesh(new THREE.CylinderGeometry(.72,.72,.06,18),cosmeticMat(hatColors[hatIndex%hatColors.length],.35,.35));
+    brim.position.y=3.02; brim.userData.cosmetic=true; player.add(brim);
+  }else if(hatIndex%3===2){
+    const crest=new THREE.Mesh(new THREE.BoxGeometry(.12,.45,.12),cosmeticMat(0xff3d71,.4,.3));
+    crest.position.set(0,3.35,0); crest.userData.cosmetic=true; player.add(crest);
+  }
+
+  // Ayakkabı renkleri + küçük taban
+  if(player.userData.shoeMeshes){
+    const shoeColor=[0x111111,0xeeeeee,0x5b4636,0xff6b9a,0x111827,0x7c3aed,0x22c55e,0x67e8f9,0xf97316,0xfacc15][(saveData.shoe||0)%10];
+    player.userData.shoeMeshes.forEach((leg,idx)=>{
+      leg.material=cosmeticMat(shoeColor,.35,.38);
+      const sole=new THREE.Mesh(new THREE.BoxGeometry(.48,.10,.52),cosmeticMat(0x080b12,.25,.55));
+      sole.position.set(0,-.58,0); sole.userData.cosmetic=true; leg.add(sole);
+    });
+  }
+
+  // Sol elde gerçek kılıç: seçilen kılıç rengine göre
+  const swordColors=[0xdbeafe,0xcbd5e1,0x22d3ee,0xf59e0b,0xa78bfa,0xff4d6d,0x93c5fd,0xfacc15,0x60a5fa,0xe5e7eb];
+  const sg=new THREE.Group(); sg.userData.cosmetic=true; sg.userData.sword=true;
+  const guard=new THREE.Mesh(new THREE.BoxGeometry(.58,.08,.12),cosmeticMat(0xd4af37,.8,.2));
+  const grip=new THREE.Mesh(new THREE.CylinderGeometry(.055,.055,.48,8),cosmeticMat(0x171717,.45,.35));
+  const blade=new THREE.Mesh(new THREE.BoxGeometry(.10,1.55,.10),cosmeticMat(swordColors[(saveData.sword||0)%10],.7,.22));
+  const tip=new THREE.Mesh(new THREE.ConeGeometry(.075,.22,4),cosmeticMat(swordColors[(saveData.sword||0)%10],.7,.22));
+  blade.position.y=.95; tip.position.y=1.84; guard.position.y=.20; grip.position.y=-.03;
+  sg.add(blade,tip,guard,grip);
+  sg.position.set(-.92,1.18,-.03); sg.rotation.z=-.18;
+  player.add(sg); player.userData.attackSword=sg;
+}
+function playSfx(kind){
+ if((saveData.sfxVolume??.8)<=0)return;
+ try{
+  audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();
+  const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+  o.type=kind==="kill"?"square":"sine";
+  o.frequency.value=kind==="kill"?150:kind==="jump"?360:kind==="attack"?520:700;
+  g.gain.setValueAtTime(.001,audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(.12*saveData.sfxVolume,audioCtx.currentTime+.01);
+  g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.18);
+  o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.2);
+ }catch(e){}
+}
+function speakUh(){
+  try{const u=new SpeechSynthesisUtterance("uh");u.lang="tr-TR";u.rate=1.5;u.pitch=.7;speechSynthesis.speak(u)}catch(e){}
+}
+function speakHelal(){
+  try{const u=new SpeechSynthesisUtterance("Helal olsun diva!");u.lang="tr-TR";u.rate=1.0;speechSynthesis.speak(u)}catch(e){}
+}
+function milestoneCheck(){
+  // Her 1000 skor ve katında konuşma + neon renk değişimi.
+  const level=Math.floor(score/1000);
+  if(level<=0) return;
+  if(level!==neonLevel){
+    neonLevel=level;
+    const colors=[0xff277f,0x00eaff,0xa855f7,0xff8a00,0x39ff14,0xff3355];
+    const c=colors[level%colors.length];
+    streetLights.forEach(l=>{ if(l.material && l.material.color) l.material.color.set(c); });
+    shopSigns.forEach(l=>{ if(l.material && l.material.color) l.material.color.set(c); });
+    toast(level*1000+" SKOR! Işıklar değişti!");
+  }
+  const milestone=level*1000;
+  if(!milestoneShown[milestone]){
+    milestoneShown[milestone]=1;
+    document.getElementById("recep").classList.add("show");
+    speakHelal();
+    setTimeout(()=>document.getElementById("recep").classList.remove("show"),1800);
+  }
+}
+
+function applyNeonShift(){
+  const level=Math.max(1,Math.floor(score/1000));
+  const colors=[0xff277f,0x00eaff,0xa855f7,0xff8a00,0x39ff14,0xff3355];
+  const c=colors[level%colors.length];
+  streetLights.forEach(l=>{if(l.material && l.material.color)l.material.color.set(c)});
+  shopSigns.forEach(l=>{if(l.material && l.material.color)l.material.color.set(c)});
+}
+function createStreetLamp(z,side){
+    const g=new THREE.Group();
+    g.position.set(side*7.0,0,z);
+
+    const pole=new THREE.Mesh(
+        new THREE.CylinderGeometry(.075,.12,5.2,10),
+        new THREE.MeshStandardMaterial({color:0x202833,metalness:.75,roughness:.28})
+    );
+    pole.position.y=2.6;
+    /* shadows disabled for performance */
+    g.add(pole);
+
+    const arm=new THREE.Mesh(
+        new THREE.BoxGeometry(1.25,.09,.09),
+        new THREE.MeshStandardMaterial({color:0x303946,metalness:.7})
+    );
+    arm.position.set(-side*.55,5.05,0);
+    g.add(arm);
+
+    const color=side<0?0x00eaff:0xff277f;
+
+    const fixture=new THREE.Mesh(
+        new THREE.BoxGeometry(.48,.18,.32),
+        new THREE.MeshStandardMaterial({
+            color:0x10151e,
+            emissive:color,
+            emissiveIntensity:1.8
+        })
+    );
+    fixture.position.set(-side*1.0,4.93,0);
+    g.add(fixture);
+
+    const bulb=new THREE.Mesh(
+        new THREE.SphereGeometry(.16,12,8),
+        new THREE.MeshBasicMaterial({color:0xffffff})
+    );
+    bulb.position.set(-side*1.0,4.82,0);
+    g.add(bulb);
+
+    const glow=new THREE.PointLight(color,2.2,11);
+    glow.position.set(-side*1.0,4.65,0);
+    
+    g.add(glow);
+
+    const pool=new THREE.Mesh(
+        new THREE.CircleGeometry(1.45,32),
+        new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:.10,depthWrite:false})
+    );
+    pool.rotation.x=-Math.PI/2;
+    pool.position.set(-side*.95,.012,0);
+    g.add(pool);
+
+    scene.add(g);
+    streetLights.push(glow);
+}
+function createShop(z,side){
+ const g=new THREE.Group();g.position.set(side*8.1,1.4,z);
+ const base=new THREE.Mesh(new THREE.BoxGeometry(3.1,2.8,3.2),new THREE.MeshStandardMaterial({color:0x101725,roughness:.8}));g.add(base);
+ const aw=new THREE.Mesh(new THREE.BoxGeometry(3.25,.12,1.1),new THREE.MeshBasicMaterial({color:side<0?0x00eaff:0xff267f}));aw.position.y=1.1;aw.position.z=-1.7;g.add(aw);
+ for(let i=0;i<3;i++){const w=new THREE.Mesh(new THREE.BoxGeometry(.72,1.1,.05),new THREE.MeshBasicMaterial({color:i%2?0xffd34d:0x00eaff}));w.position.set(-1+i,1.65,-1.64);g.add(w)}
+ const sign=new THREE.Mesh(new THREE.BoxGeometry(2.2,.38,.08),new THREE.MeshBasicMaterial({color:0x00eaff}));sign.position.set(0,3.05,-1.63);g.add(sign);shopSigns.push(sign);
+ scene.add(g);buildings.push(g);
+}
+function spawnRoach(){
+ const r=new THREE.Group();
+ // Daha gerçekçi hamam böceği: baş + göğüs + karın + kanat kapakları + şeffaf uçuş kanatları + 6 bacak + anten.
+ const shell=cosmeticMat(0x4a2b1d,.12,.78);
+ const shellDark=cosmeticMat(0x21110b,.08,.88);
+ const wingMat=new THREE.MeshPhongMaterial({color:0x6b4635,transparent:true,opacity:.72,side:THREE.DoubleSide,shininess:65});
+ const membraneMat=new THREE.MeshPhongMaterial({color:0xb88762,transparent:true,opacity:.30,side:THREE.DoubleSide,shininess:35});
+ const legMat=cosmeticMat(0x24140e,.06,.92);
+ 
+ const abdomen=new THREE.Mesh(new THREE.SphereGeometry(1,14,10),shell);
+ abdomen.scale.set(.34,.18,.62); abdomen.rotation.x=Math.PI/2;
+ abdomen.position.set(0,.24,.02); r.add(abdomen);
+ 
+ const thorax=new THREE.Mesh(new THREE.SphereGeometry(1,12,9),shellDark);
+ thorax.scale.set(.25,.19,.30); thorax.rotation.x=Math.PI/2;
+ thorax.position.set(0,.28,-.43); r.add(thorax);
+ 
+ const head=new THREE.Mesh(new THREE.SphereGeometry(.145,12,8),shellDark);
+ head.position.set(0,.30,-.70); r.add(head);
+ 
+ // Sert kanat kapakları
+ const coverL=new THREE.Mesh(new THREE.SphereGeometry(1,12,8),wingMat);
+ coverL.scale.set(.19,.035,.53); coverL.rotation.x=Math.PI/2; coverL.rotation.z=.13;
+ coverL.position.set(-.105,.39,-.02); r.add(coverL);
+ const coverR=coverL.clone(); coverR.rotation.z=-.13; coverR.position.x=.105; r.add(coverR);
+ 
+ // Açılmış büyük uçuş kanatları
+ const wingL=new THREE.Mesh(new THREE.PlaneGeometry(.48,.72),membraneMat);
+ wingL.rotation.set(-Math.PI/2+.18,.18,.30); wingL.position.set(-.25,.43,-.03); r.add(wingL);
+ const wingR=wingL.clone(); wingR.rotation.z=-.30; wingR.position.x=.25; r.add(wingR);
+ 
+ // 6 gerçekçi eklemli bacak
+ for(let i=0;i<3;i++){
+   [-1,1].forEach(side=>{
+     const upper=new THREE.Mesh(new THREE.CylinderGeometry(.018,.013,.30,6),legMat);
+     upper.rotation.z=side*(1.12-(i*.10));
+     upper.rotation.y=(i-1)*.42;
+     upper.position.set(side*(.19+i*.025),.14,.18-i*.28); r.add(upper);
+     const lower=new THREE.Mesh(new THREE.CylinderGeometry(.014,.008,.30,6),legMat);
+     lower.rotation.z=-side*(.62+(i*.08));
+     lower.rotation.y=(i-1)*.34;
+     lower.position.set(side*(.34+i*.035),.075,.10-i*.28); r.add(lower);
+   });
+ }
+ 
+ // Uzun antenler
+ [-1,1].forEach(side=>{
+   const ant=new THREE.Mesh(new THREE.CylinderGeometry(.008,.004,.62,6),legMat);
+   ant.rotation.z=side*.25; ant.rotation.x=-.38;
+   ant.position.set(side*.075,.39,-.86); r.add(ant);
+   const tip=new THREE.Mesh(new THREE.SphereGeometry(.025,6,5),legMat);
+   tip.position.set(side*.20,.63,-1.08); r.add(tip);
+ });
+ 
+ r.position.set(laneX[Math.floor(Math.random()*3)],.28,-100);
+ r.scale.setScalar(.9);
+ r.userData.type="roach"; r.userData.hp=1; r.userData.hitRadius=1.05;
+ r.userData.damageDone=false;
+ scene.add(r); roaches.push(r);
+}
+function attack(){
+ if(gameState!=="playing" || attackCooldown>0 || !player)return;
+ attackCooldown=.12; attackTimer=.22;
+ if(player.userData.attackSword){
+   player.userData.attackSword.rotation.z=-1.15;
+   player.userData.attackSword.position.x=-.72;
+ }
+ let hit=null;
+ for(const r of roaches){
+   const dx=Math.abs(r.position.x-player.position.x), dz=Math.abs(r.position.z-player.position.z);
+   if(dx<2.5 && dz<4.2 && Math.abs(r.position.y-player.position.y)<2.2){hit=r;break;}
+ }
+ if(hit) killRoach(hit);
+ else playSfx("attack");
+}
+function killRoach(r){
+ const p=r.position.clone();scene.remove(r);roaches.splice(roaches.indexOf(r),1);
+ score+=75;taskState.kills++;playSfx("kill");speakUh();
+ for(let i=0;i<6;i++)createParticle(p,0xff7a18);
+ toast("🪳 KESİLDİ! UH!");
+}
+function updateRoaches(dt,move){
+ for(let i=roaches.length-1;i>=0;i--){
+   const r=roaches[i];
+   r.position.z+=move;
+   r.rotation.y+=dt*3.5;
+   // Kanatlar hafifçe titreşsin; böcek canlı görünsün.
+   r.userData.wingPhase=(r.userData.wingPhase||0)+dt*22;
+   const flap=.10+Math.sin(r.userData.wingPhase)*.055;
+   if(r.children[4]) r.children[4].rotation.x=-Math.PI/2+.18+flap;
+   if(r.children[5]) r.children[5].rotation.x=-Math.PI/2+.18-flap;
+   
+   // Oyuncu böceği zamanında kılıçla vuramazsa temas hasarı.
+   const dx=Math.abs(r.position.x-player.position.x);
+   const dz=Math.abs(r.position.z-player.position.z);
+   if(!r.userData.damageDone && dx<1.15 && dz<.95){
+      r.userData.damageDone=true;
+      health=Math.max(0,health-1);
+      hitCooldown=.9;
+      createHitEffect();
+      playSfx("hit");
+      toast("🪳 BÖCEK SANA ÇARPTI! -1 CAN");
+      updateHUD();
+      scene.remove(r); roaches.splice(i,1);
+      if(health<=0){ gameOver(); return; }
+      continue;
+   }
+   if(r.position.z>15){scene.remove(r);roaches.splice(i,1);continue}
+ }
+}
+function updateTasks(){
+  const day=todayKey(), week=weekKey();
+  let changed=false;
+  if(saveData.lastTaskDay!==day){saveData.tasks={};saveData.lastTaskDay=day;changed=true}
+  if(saveData.lastWeek!==week){saveData.lastWeek=week;changed=true}
+  if(changed) persist();
+
+  const tasks=[
+   ["500 skor",score,500,50,"score"],
+   ["1000 skor",score,1000,100,"score"],
+   ["1500 skor",score,1500,150,"score"],
+   ["10 coin topla",coinCount,10,100,"coins"],
+   ["5 böcek öldür",taskState.kills,5,150,"kills"],
+   ["50 metre koş",distance,50,75,"distance"]
+  ];
+
+  document.getElementById("missionGrid").innerHTML=tasks.map(t=>{
+   const claimed=!!(saveData.tasks[t[4]]);
+   const complete=t[1]>=t[2];
+   const pct=Math.min(100,t[1]/t[2]*100);
+   let action="";
+   if(claimed){
+     action='<div style="margin-top:8px;color:#55ff99;font-weight:900">✓ ÖDÜL TOPLANDI</div>';
+   }else if(complete){
+     action='<button class="claimTaskBtn ready" onclick="claimTask(\''+t[4]+'\','+t[3]+')">ÖDÜLÜ TOPLA • +'+t[3]+' 🪙</button>';
+   }
+   return '<div class="missionCard"><b>'+t[0]+'</b><br>'+Math.floor(t[1])+'/'+t[2]+'<div class="progress"><i style="width:'+pct+'%"></i></div>'+action+'</div>';
+  }).join("");
+}
+function claimTask(key,reward){
+  if(saveData.tasks[key])return;
+  saveData.tasks[key]=true;
+  saveData.bankCoins=(saveData.bankCoins||0)+reward;
+  persist();
+  toast("Görev ödülü +"+reward+" 🪙");
+  updateHUD();
+  updateTasks();
+}
+function renderDaily(){
+ const day=todayKey(), rewards=[100,150,200,300,400,550,800], idx=(new Date().getDate()-1)%7, reward=rewards[idx], claimed=saveData.dailyClaim===day;
+ document.getElementById("dailyGrid").innerHTML=`<div class="dailyCard"><h3>Bugünün ödülü</h3><p style="font-size:34px;margin:12px 0">🪙 ${reward}</p><p>${claimed?"Bugün alındı. Yarın farklı ödül var.":"Günün değiştikçe ödül de değişir."}</p><button ${claimed?"disabled":""} onclick="claimDaily(${reward})">${claimed?"ALINDI":"ÖDÜLÜ AL"}</button></div>`;
+}
+function claimDaily(reward){
+  if(saveData.dailyClaim===todayKey())return;
+  saveData.bankCoins+=reward;
+  saveData.dailyClaim=todayKey();
+  persist();
+  toast("Günlük ödül +"+reward+" 🪙");
+  updateHUD();
+  renderDaily();
+}
+function setupAudio(){
+ document.getElementById("musicVolume").value=saveData.musicVolume??.35;
+ document.getElementById("sfxVolume").value=saveData.sfxVolume??.8;
+ document.getElementById("musicVolume").oninput=e=>{saveData.musicVolume=+e.target.value;if(musicAudio)musicAudio.volume=saveData.musicVolume;persist()}
+ document.getElementById("sfxVolume").oninput=e=>{saveData.sfxVolume=+e.target.value;persist()}
+ document.getElementById("musicFile").onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  if(musicAudio)musicAudio.pause();
+  musicAudio=new Audio(URL.createObjectURL(f));musicAudio.loop=true;musicAudio.volume=saveData.musicVolume??.35;
+  musicAudio.play().catch(()=>toast("Müziği başlatmak için OYUNA BAŞLA'ya bas."));
+ };
+}
+
+/* =====================================================
+   INIT
+===================================================== */
+
+function init(){
+
+    loadSave();
+    setupAudio();
+    scene = new THREE.Scene();
+
+    scene.background =
+        new THREE.Color(0x02040b);
+
+    scene.fog =
+        new THREE.Fog(
+            0x02040b,
+            PERF.mobile ? 28 : 35,
+            PERF.mobile ? 105 : 145
+        );
+
+
+    camera =
+        new THREE.PerspectiveCamera(
+            68,
+            window.innerWidth /
+            window.innerHeight,
+            .1,
+            300
+        );
+
+    camera.position.set(
+        0,
+        5.2,
+        9
+    );
+
+
+    renderer =
+        new THREE.WebGLRenderer({
+            antialias:!PERF.mobile,
+            powerPreference:"high-performance",
+            stencil:false
+        });
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    renderer.setPixelRatio(PERF.pixelRatio);
+
+    /* FPS OPTIMIZATION: dynamic/soft shadows are very expensive with this many objects. */
+    renderer.shadowMap.enabled = false;
+
+    document.body.appendChild(
+        renderer.domElement
+    );
+
+
+    clock = new THREE.Clock();
+
+
+    createLights();
+    createWorld();
+    createPlayer();
+
+    window.addEventListener(
+        "resize",
+        resize
+    );
+
+    setupControls();
+    renderShop();
+    updateTasks();
+    renderDaily();
+
+    requestAnimationFrame(loop);
+}
+
+
+/* =====================================================
+   LIGHTS
+===================================================== */
+
+function createLights(){
+
+    const ambient =
+        new THREE.HemisphereLight(
+            0x557799,
+            0x050509,
+            1.7
+        );
+
+    scene.add(ambient);
+
+
+    const moon =
+        new THREE.DirectionalLight(
+            0xcfeeff,
+            2.2
+        );
+
+    moon.position.set(
+        -20,
+        35,
+        20
+    );
+
+    moon.castShadow = false;
+
+    moon.shadow.mapSize.width = 1024;
+    moon.shadow.mapSize.height = 1024;
+
+    moon.shadow.camera.near = 1;
+    moon.shadow.camera.far = 100;
+
+    moon.shadow.camera.left = -30;
+    moon.shadow.camera.right = 30;
+    moon.shadow.camera.top = 30;
+    moon.shadow.camera.bottom = -30;
+
+    scene.add(moon);
+
+
+    const pinkLight =
+        new THREE.PointLight(
+            0xff0066,
+            3,
+            24
+        );
+
+    pinkLight.position.set(
+        -10,
+        5,
+        -15
+    );
+
+    scene.add(pinkLight);
+
+
+    const blueLight =
+        new THREE.PointLight(
+            0x00d9ff,
+            3,
+            24
+        );
+
+    blueLight.position.set(
+        10,
+        5,
+        -25
+    );
+
+    scene.add(blueLight);
+
+    const roadBlue=new THREE.PointLight(0x00cfff,3.5,30);
+    roadBlue.position.set(-5,4,-30);
+    scene.add(roadBlue);
+
+    const roadPink=new THREE.PointLight(0xff1680,3.5,30);
+    roadPink.position.set(5,4,-55);
+    scene.add(roadPink);
+
+    const fill=new THREE.DirectionalLight(0x88aaff,.65);
+    fill.position.set(0,18,12);
+    scene.add(fill);
+}
+
+
+/* =====================================================
+   WORLD
+===================================================== */
+
+function createWorld(){
+
+    /* yol parçaları */
+
+    for(let i=0;i<(PERF.mobile ? 6 : 12);i++){
+
+        createRoadSegment(
+            -i * 32
+        );
+    }
+
+
+    /* yan şehir */
+
+    for(let i=0;i<(PERF.mobile ? 10 : 24);i++){
+        createBuilding(-i*8-14,-1);
+        createBuilding(-i*8-18,1);
+    }
+
+
+    /* neon direkler */
+
+    for(let i=0;i<(PERF.mobile ? 6 : 10);i++){
+
+        createNeonPole(
+            -i * 12 - 10,
+            -1
+        );
+
+        createNeonPole(
+            -i * 12 - 16,
+            1
+        );
+    }
+
+    for(let i=0;i<(PERF.mobile ? 10 : 22);i++){
+        createStreetLamp(-i*8-9,-1);
+        createStreetLamp(-i*8-13,1);
+    }
+    for(let i=0;i<(PERF.mobile ? 6 : 12);i++){
+        createShop(-i*16-24,i%2?-1:1);
+    }
+
+
+    /* ay */
+
+    const moonGeo =
+        new THREE.SphereGeometry(
+            6,
+            24,
+            24
+        );
+
+    const moonMat =
+        new THREE.MeshBasicMaterial({
+            color:0xaedcff
+        });
+
+    const moon =
+        new THREE.Mesh(
+            moonGeo,
+            moonMat
+        );
+
+    moon.position.set(
+        -45,
+        35,
+        -100
+    );
+
+    scene.add(moon);
+}
+
+
+/* =====================================================
+   ROAD
+===================================================== */
+
+function createRoadSegment(z){
+
+    const group =
+        new THREE.Group();
+
+    group.position.z = z;
+
+    const roadGeo =
+        new THREE.BoxGeometry(
+            12,
+            .35,
+            32
+        );
+
+    const road =
+        new THREE.Mesh(
+            roadGeo,
+            materials.road
+        );
+
+    road.position.y = -.2;
+
+    
+
+    group.add(road);
+
+
+    /* kenar ışıkları */
+
+    for(const x of [-5.8,5.8]){
+
+        const geo =
+            new THREE.BoxGeometry(
+                .08,
+                .08,
+                32
+            );
+
+        const line =
+            new THREE.Mesh(
+                geo,
+                materials.roadLine
+            );
+
+        line.position.y = .02;
+        line.position.x = x;
+
+        group.add(line);
+    }
+
+
+    /* şerit çizgileri */
+
+    for(const x of [-1.6,1.6]){
+
+        for(let j=0;j<8;j++){
+
+            const geo =
+                new THREE.BoxGeometry(
+                    .07,
+                    .035,
+                    2.2
+                );
+
+            const line =
+                new THREE.Mesh(
+                    geo,
+                    new THREE.MeshBasicMaterial({
+                        color:0x536270
+                    })
+                );
+
+            line.position.set(
+                x,
+                .01,
+                -14 + j*4
+            );
+
+            group.add(line);
+        }
+    }
+
+
+    scene.add(group);
+
+    roadSegments.push(group);
+}
+
+
+/* =====================================================
+   BUILDINGS
+===================================================== */
+
+function createBuilding(z,side){
+    // Daha "gerçek şehir" hissi: farklı cephe oranları, kat silmeleri,
+    // balkonlar, yan pencereler, çatı ekipmanları ve neon detaylar.
+    const width = 5.8 + Math.random()*4.8;
+    const height = 9 + Math.random()*14;
+    const depth = 7.5 + Math.random()*4.5;
+
+    const group = new THREE.Group();
+    group.position.set(side*(9.5 + Math.random()*1.8),0,z);
+
+    // Şehirdeki evlere gerçek renk katmanları: ana cephe + ikinci cephe + vurgu rengi.
+    const palettes = [
+        [0x26364a,0x49627a,0x19c3d1], // mavi-gri
+        [0x3b2630,0x68404d,0xff4f8b], // bordo
+        [0x263d35,0x466c5a,0x63e6a4], // yeşil
+        [0x40352a,0x735f43,0xffb84d], // sıcak taş
+        [0x322d4d,0x584f7d,0xa98cff], // mor
+        [0x263d45,0x3f6872,0x55dfff]  // turkuaz
+    ];
+    const pal = palettes[Math.floor(Math.random()*palettes.length)];
+
+    const facadeMat = new THREE.MeshStandardMaterial({
+        color:pal[0], roughness:.78, metalness:.12
+    });
+    const trimMat = new THREE.MeshStandardMaterial({
+        color:pal[1], roughness:.58, metalness:.25
+    });
+    const darkMat = new THREE.MeshStandardMaterial({
+        color:0x080b12, roughness:.4, metalness:.55
+    });
+    const accentMat = new THREE.MeshStandardMaterial({
+        color:pal[2], roughness:.48, metalness:.18
+    });
+
+    // Ana gövde
+    const body = new THREE.Mesh(new THREE.BoxGeometry(width,height,depth),facadeMat);
+    body.position.y=height/2;
+    group.add(body);
+
+    // Cepheyi renk katmanlarına ayır: büyük paneller, kat şeritleri ve renkli kolonlar.
+    // Bunlar ışık üretmez; bu yüzden performansı fazla etkilemez.
+    const panelCount = PERF.mobile ? 1 : Math.max(2, Math.floor(width/2.4));
+    for(let i=0;i<panelCount;i++){
+        const panelW = (width-.35)/panelCount;
+        const panel = new THREE.Mesh(
+            new THREE.BoxGeometry(panelW-.10, height-.55, .045),
+            new THREE.MeshStandardMaterial({
+                color: i%2===0 ? pal[1] : pal[0],
+                roughness:.72,
+                metalness:.12
+            })
+        );
+        panel.position.set(
+            -width/2 + panelW/2 + i*panelW,
+            height/2,
+            -depth/2-.025
+        );
+        group.add(panel);
+    }
+
+    // Bazı binalarda belirgin renkli dikey orta bant.
+    if(Math.random() < .72){
+        const bandW = .34 + Math.random()*.22;
+        const band = new THREE.Mesh(
+            new THREE.BoxGeometry(bandW, height-.35, .07),
+            accentMat
+        );
+        band.position.set(
+            (Math.random()-.5)*(width*.45),
+            height/2,
+            -depth/2-.075
+        );
+        group.add(band);
+    }
+
+    // Ön cepheyi biraz dışarı taşıyan kolonlar / köşe hatları
+    for(const sx of [-1,1]){
+        const column = new THREE.Mesh(
+            new THREE.BoxGeometry(.16,height-.3,.18),
+            trimMat
+        );
+        column.position.set(sx*(width/2-.10),(height-.3)/2,-depth/2-.055);
+        group.add(column);
+    }
+
+    // Kat kat yatay beton/metal silmeler: binayı düz kutu olmaktan çıkarır
+    const floors = PERF.mobile ? 2 : Math.max(4,Math.floor(height/2.2));
+    for(let r=1;r<floors;r++){
+        const y = r*(height/floors);
+        const ledge = new THREE.Mesh(
+            new THREE.BoxGeometry(width+.18,.11,.22),
+            (r%3===0 ? accentMat : trimMat)
+        );
+        ledge.position.set(0,y,-depth/2-.075);
+        group.add(ledge);
+    }
+
+    // Çatı boyunca ince renkli vurgu bandı.
+    const roofAccent = new THREE.Mesh(
+        new THREE.BoxGeometry(width+.30,.12,depth+.30),
+        accentMat
+    );
+    roofAccent.position.y=height+.02;
+    group.add(roofAccent);
+
+    // Çatı parapeti
+    const roof = new THREE.Mesh(
+        new THREE.BoxGeometry(width+.25,.28,depth+.25),
+        darkMat
+    );
+    roof.position.y=height+.12;
+    group.add(roof);
+
+    // Çatıdaki küçük teknik kutular / havalandırmalar
+    const roofUnits = 1 + Math.floor(Math.random()*2);
+    for(let i=0;i<roofUnits;i++){
+        const rw=.75+Math.random()*.65, rd=.65+Math.random()*.55, rh=.45+Math.random()*.7;
+        const unit = new THREE.Mesh(
+            new THREE.BoxGeometry(rw,rh,rd),
+            trimMat
+        );
+        unit.position.set(
+            (Math.random()-.5)*(width-rw-0.5),
+            height+.28+rh/2,
+            (Math.random()-.5)*(depth-rd-0.5)
+        );
+        group.add(unit);
+    }
+
+    // Ön cephe pencereleri
+    const frontZ = -depth/2-.12;
+    const cols=PERF.mobile ? Math.max(2,Math.floor(width/2.5)) : Math.max(2,Math.floor(width/1.65));
+    const rows=PERF.mobile ? Math.max(3,Math.floor(height/3.0)) : Math.max(4,Math.floor(height/2.0));
+    const windowColors=[0x8beeff,0xff4d9d,0xffd66b,0x9dff91];
+
+    for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+            // Bazı katlarda düzensizlik; her pencere aynı görünmesin
+            if(Math.random()<.10) continue;
+
+            const color=windowColors[Math.floor(Math.random()*windowColors.length)];
+            const wx=.68, wh=.82;
+            const x=-width/2+.82+c*((width-1.35)/Math.max(1,cols-1));
+            const y=1.15+r*(height-1.9)/Math.max(1,rows-1);
+
+            // Koyu pencere kasası
+            const frame=new THREE.Mesh(
+                new THREE.BoxGeometry(wx+.16,wh+.16,.08),
+                darkMat
+            );
+            frame.position.set(x,y,frontZ);
+            group.add(frame);
+
+            // Emissive-benzeri düz ışıklı cam (Basic = ucuz)
+            const win=new THREE.Mesh(
+                new THREE.BoxGeometry(wx,wh,.055),
+                new THREE.MeshBasicMaterial({color:color})
+            );
+            win.position.set(x,y,frontZ-.055);
+            group.add(win);
+
+            // Cam bölmesi
+            const mullion = new THREE.Mesh(
+                new THREE.BoxGeometry(.045,wh,.065),
+                darkMat
+            );
+            mullion.position.set(x,y,frontZ-.088);
+            group.add(mullion);
+
+            // Altında küçük balkon / klima detayı bazen
+            if(r>0 && Math.random()<.12){
+                const balcony = new THREE.Mesh(
+                    new THREE.BoxGeometry(1.15,.10,.48),
+                    trimMat
+                );
+                balcony.position.set(x,y-.58,frontZ-.22);
+                group.add(balcony);
+
+                const rail = new THREE.Mesh(
+                    new THREE.BoxGeometry(1.05,.34,.045),
+                    darkMat
+                );
+                rail.position.set(x,y-.38,frontZ-.45);
+                group.add(rail);
+            }
+        }
+    }
+
+    // Yan cephede seyrek pencereler: yaklaşınca binanın tek yüzlü görünmesini engeller
+    const sideCols=PERF.mobile ? 1 : Math.max(1,Math.floor(depth/2.5));
+    const sideRows=PERF.mobile ? 2 : Math.max(3,Math.floor(height/2.6));
+    for(let r=0;r<sideRows;r++){
+        for(let c=0;c<sideCols;c++){
+            if(Math.random()<.25) continue;
+            const sy = 1.4+r*(height-2)/Math.max(1,sideRows-1);
+            const sz = -depth/2+.9+c*(depth-1.8)/Math.max(1,sideCols-1);
+            const sw = new THREE.Mesh(
+                new THREE.BoxGeometry(.055,.58,.72),
+                new THREE.MeshBasicMaterial({color:windowColors[(r+c)%windowColors.length]})
+            );
+            sw.position.set(side*(width/2+.055),sy,sz);
+            group.add(sw);
+        }
+    }
+
+    // Zemin girişi + vitrin
+    const door=new THREE.Mesh(
+        new THREE.BoxGeometry(1.18,2.45,.10),
+        darkMat
+    );
+    door.position.set(0,1.22,frontZ-.12);
+    group.add(door);
+
+    const doorGlass = new THREE.Mesh(
+        new THREE.BoxGeometry(.72,1.45,.04),
+        new THREE.MeshBasicMaterial({color:side<0?0x00bde8:0xff287f})
+    );
+    doorGlass.position.set(0,1.42,frontZ-.18);
+    group.add(doorGlass);
+
+    // Neon tabela + tabela altı saçak
+    const neonColor=side<0?0x00eaff:0xff1679;
+    const signW=Math.min(width-1,3.9);
+    const sign=new THREE.Mesh(
+        new THREE.BoxGeometry(signW,.40,.10),
+        new THREE.MeshBasicMaterial({color:neonColor})
+    );
+    sign.position.set(0,3.25,frontZ-.17);
+    group.add(sign);
+    shopSigns.push(sign);
+
+    const awning = new THREE.Mesh(
+        new THREE.BoxGeometry(Math.min(width-1.2,3.8),.08,.58),
+        new THREE.MeshStandardMaterial({color:0x090b12,roughness:.4,metalness:.35})
+    );
+    awning.position.set(0,2.72,frontZ-.28);
+    awning.rotation.x=.06;
+    group.add(awning);
+
+    // Dikey neon köşe şeritleri
+    for(const sx of [-width/2+.12,width/2-.12]){
+        const strip=new THREE.Mesh(
+            new THREE.BoxGeometry(.075,height-.55,.08),
+            new THREE.MeshBasicMaterial({color:neonColor})
+        );
+        strip.position.set(sx,height/2,frontZ-.14);
+        group.add(strip);
+    }
+
+    // Klima dış üniteleri: az sayıda, küçük geometri
+    const acCount = PERF.mobile ? 0 : Math.floor(height/6);
+    for(let i=0;i<acCount;i++){
+        const ac = new THREE.Mesh(
+            new THREE.BoxGeometry(.52,.36,.20),
+            trimMat
+        );
+        ac.position.set(
+            -width/2+.45+(i%2)*.7,
+            2.5+i*5.0,
+            frontZ-.18
+        );
+        group.add(ac);
+    }
+
+    // Çatı anteni
+    const antenna=new THREE.Mesh(
+        new THREE.CylinderGeometry(.035,.06,1.8,8),
+        darkMat
+    );
+    antenna.position.y=height+1.15;
+    group.add(antenna);
+
+    // Anten üstünde küçük kırmızı uyarı ışığı (PointLight yok)
+    const beacon = new THREE.Mesh(
+        new THREE.SphereGeometry(.07,8,8),
+        new THREE.MeshBasicMaterial({color:0xff234f})
+    );
+    beacon.position.y=height+2.05;
+    group.add(beacon);
+
+    scene.add(group);
+    buildings.push(group);
+}
+
+/* =====================================================
+   NEON POLE
+===================================================== */
+
+function createNeonPole(z,side){
+
+    const group =
+        new THREE.Group();
+
+    group.position.set(
+        side*7.5,
+        0,
+        z
+    );
+
+
+    const poleGeo =
+        new THREE.CylinderGeometry(
+            .06,
+            .09,
+            5,
+            8
+        );
+
+    const pole =
+        new THREE.Mesh(
+            poleGeo,
+            materials.dark
+        );
+
+    pole.position.y=2.5;
+
+    group.add(pole);
+
+
+    const lampGeo =
+        new THREE.SphereGeometry(
+            .16,
+            10,
+            10
+        );
+
+    const lamp =
+        new THREE.Mesh(
+            lampGeo,
+            new THREE.MeshBasicMaterial({
+                color:
+                    side===-1
+                    ? 0xff1679
+                    : 0x00eaff
+            })
+        );
+
+    lamp.position.y=5;
+
+    group.add(lamp);
+
+
+    scene.add(group);
+
+    buildings.push(group);
+}
+
+
+/* =====================================================
+   PLAYER
+===================================================== */
+
+function createPlayer(){
+
+    player =
+        new THREE.Group();
+
+
+    /* gövde */
+
+    const body =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                1.15,
+                1.45,
+                .7
+            ),
+            materials.ninja
+        );
+
+    body.position.y=1.45;
+    
+    body.userData.ninjaBody=true;
+
+    player.add(body);
+
+
+    /* kafa */
+
+    const head =
+        new THREE.Mesh(
+            new THREE.SphereGeometry(
+                .56,
+                18,
+                14
+            ),
+            materials.ninja
+        );
+
+    head.position.y=2.58;
+    
+
+    player.add(head);
+
+
+    /* maske */
+
+    const mask =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                1.05,
+                .23,
+                .62
+            ),
+            materials.red
+        );
+
+    mask.position.set(
+        0,
+        2.57,
+        -.48
+    );
+
+    player.add(mask);
+
+
+    /* gözler */
+
+    for(const x of [-.22,.22]){
+
+        const eye =
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    .13,
+                    .055,
+                    .025
+                ),
+                new THREE.MeshBasicMaterial({
+                    color:0xffffff
+                })
+            );
+
+        eye.position.set(
+            x,
+            2.61,
+            -.80
+        );
+
+        player.add(eye);
+    }
+
+
+    /* bacaklar */
+
+    player.leftLeg =
+        createLimb(
+            -.36,
+            .62,
+            .4,
+            1.15,
+            .45
+        );
+
+    player.rightLeg =
+        createLimb(
+            .36,
+            .62,
+            .4,
+            1.15,
+            .45
+        );
+
+
+    /* kollar */
+
+    player.leftArm =
+        createLimb(
+            -.82,
+            1.55,
+            .32,
+            1.2,
+            .32
+        );
+
+    player.rightArm =
+        createLimb(
+            .82,
+            1.55,
+            .32,
+            1.2,
+            .32
+        );
+
+
+    /* kılıç */
+
+    const handle =
+        new THREE.Mesh(
+            new THREE.CylinderGeometry(
+                .075,
+                .075,
+                .7,
+                8
+            ),
+            materials.dark
+        );
+
+    handle.rotation.z =
+        Math.PI/2;
+
+    handle.position.set(
+        -.9,
+        1.95,
+        .12
+    );
+
+    player.add(handle);
+
+
+    const blade =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                1.7,
+                .09,
+                .12
+            ),
+            materials.blade
+        );
+
+    blade.position.set(
+        -1.25,
+        2.25,
+        .12
+    );
+
+    blade.rotation.z =
+        Math.PI/2;
+
+    player.add(blade);
+
+
+    player.position.set(
+        0,
+        0,
+        3
+    );
+
+    scene.add(player);
+    player.userData.shoeMeshes=[player.leftLeg,player.rightLeg];
+    applyCosmetics();
+}
+
+
+function createLimb(
+    x,
+    y,
+    sx,
+    sy,
+    sz
+){
+
+    const limb =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                sx,
+                sy,
+                sz
+            ),
+            materials.ninja
+        );
+
+    limb.position.set(
+        x,
+        y,
+        0
+    );
+
+    
+
+    player.add(limb);
+
+    return limb;
+}
+
+
+/* =====================================================
+   OBSTACLE
+===================================================== */
+
+function spawnObstacle(){
+
+    const laneIndex =
+        Math.floor(
+            Math.random()*3
+        );
+
+    const type =
+        Math.random() < .65
+        ? "crate"
+        : "barrier";
+
+    let object;
+
+    if(type==="crate"){
+
+        object =
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    1.9,
+                    1.9,
+                    1.8
+                ),
+                materials.obstacle
+            );
+
+        object.position.y=.95;
+
+    }else{
+
+        object =
+            new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    2.5,
+                    .85,
+                    .8
+                ),
+                materials.obstacle
+            );
+
+        object.position.y=.43;
+    }
+
+
+    object.position.x =
+        laneX[laneIndex];
+
+    object.position.z =
+        -95;
+
+    
+
+    object.userData.type =
+        "obstacle";
+
+    scene.add(object);
+
+    obstacles.push(object);
+}
+
+
+/* =====================================================
+   COIN
+===================================================== */
+
+function spawnCoin(){
+
+    const laneIndex =
+        Math.floor(
+            Math.random()*3
+        );
+
+    const coin =
+        new THREE.Mesh(
+            new THREE.TorusGeometry(
+                .38,
+                .11,
+                10,
+                20
+            ),
+            materials.gold
+        );
+
+    coin.position.set(
+        laneX[laneIndex],
+        1.5,
+        -95
+    );
+
+    coin.rotation.x =
+        Math.PI/2;
+
+    coin.userData.type =
+        "coin";
+
+    scene.add(coin);
+
+    coins.push(coin);
+}
+
+
+/* =====================================================
+   PARTICLE
+===================================================== */
+
+function createParticle(
+    position,
+    color
+){
+    if(particles.length >= (PERF.mobile ? 28 : 80)) return;
+
+    const particle =
+        new THREE.Mesh(
+            new THREE.SphereGeometry(
+                .045,
+                6,
+                6
+            ),
+            new THREE.MeshBasicMaterial({
+                color:color
+            })
+        );
+
+    particle.position.copy(
+        position
+    );
+
+    particle.userData.life=.5;
+
+    particle.userData.velocity =
+        new THREE.Vector3(
+            (Math.random()-.5)*.15,
+            Math.random()*.18,
+            (Math.random()-.5)*.15
+        );
+
+    scene.add(particle);
+
+    particles.push(particle);
+}
+
+
+function updateParticles(dt){
+
+    for(
+        let i=particles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p=particles[i];
+
+        p.position.addScaledVector(
+            p.userData.velocity,
+            dt*60
+        );
+
+        p.userData.life-=dt;
+
+        if(p.userData.life<=0){
+
+            scene.remove(p);
+
+            particles.splice(i,1);
+        }
+    }
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+function moveLeft(){
+
+    if(gameState!=="playing")
+        return;
+
+    lane--;
+
+    if(lane<0)
+        lane=0;
+
+    targetX =
+        laneX[lane];
+}
+
+
+function moveRight(){
+
+    if(gameState!=="playing")
+        return;
+
+    lane++;
+
+    if(lane>2)
+        lane=2;
+
+    targetX =
+        laneX[lane];
+}
+
+
+function jump(){
+
+    if(
+        gameState!=="playing" ||
+        !grounded
+    )
+        return;
+
+    verticalVelocity=.28;
+    grounded=false;
+    playSfx("jump");
+}
+
+
+function setupControls(){
+    window.addEventListener("pointerdown", function(e){ if(e.button===0) attack(); });
+
+
+    window.addEventListener(
+        "keydown",
+        function(e){
+
+            if(
+                e.code==="ArrowLeft" ||
+                e.code==="KeyA"
+            ){
+                moveLeft();
+            }
+
+            else if(
+                e.code==="ArrowRight" ||
+                e.code==="KeyD"
+            ){
+                moveRight();
+            }
+
+            else if(
+                e.code==="Space" ||
+                e.code==="ArrowUp" ||
+                e.code==="KeyW"
+            ){
+                e.preventDefault();
+                jump();
+            }
+
+            else if(
+                e.code==="KeyP"
+            ){
+                togglePause();
+            }
+        }
+    );
+
+
+    document
+        .getElementById("leftButton")
+        .addEventListener(
+            "pointerdown",
+            moveLeft
+        );
+
+    document
+        .getElementById("rightButton")
+        .addEventListener(
+            "pointerdown",
+            moveRight
+        );
+
+    document
+        .getElementById("jumpButton")
+        .addEventListener(
+            "pointerdown",
+            jump
+        );
+
+
+    const startBtn = document.getElementById("startButton");
+    const restartBtn = document.getElementById("restartButton");
+
+    // Başlangıç ekranının takılı kalmasını önle: click + pointerup destekle.
+    if(startBtn){
+        startBtn.onclick = null;
+        startBtn.addEventListener("click", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            try{ startGame(); }catch(err){ console.error(err); toast("Oyun başlatılırken hata oluştu."); }
+        });
+        startBtn.addEventListener("pointerup", function(e){
+            if(e.button === 0){
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+    }
+
+    if(restartBtn){
+        restartBtn.onclick = function(e){
+            e.preventDefault();
+            startGame();
+        };
+    }
+
+    document
+        .getElementById("resumeButton")
+        .onclick=togglePause;
+
+    document.getElementById("shopButton").onclick=()=>{saveBankCoins();renderShop();openOverlay("shop")};
+    document.getElementById("missionButton").onclick=()=>{updateTasks();openOverlay("missions")};
+    document.getElementById("dailyButton").onclick=()=>{renderDaily();openOverlay("daily")};
+    document.getElementById("settingsButton").onclick=()=>openOverlay("settings");
+    document.getElementById("pauseButton").onclick=togglePause;
+
+    function openPauseMenuOverlay(id){
+        overlayFromPause=true;
+        document.getElementById("pause").style.display="none";
+        if(id==="lobby"){saveBankCoins();renderLobby();}
+        if(id==="shop"){saveBankCoins();renderShop();}
+        if(id==="missions"){updateTasks();}
+        openOverlay(id);
+    }
+    document.getElementById("pauseLobbyButton").onclick=()=>openPauseMenuOverlay("lobby");
+    document.getElementById("pauseShopButton").onclick=()=>openPauseMenuOverlay("shop");
+    document.getElementById("pauseMissionButton").onclick=()=>openPauseMenuOverlay("missions");
+    document.getElementById("pauseRewardButton").onclick=()=>openPauseMenuOverlay("daily");
+    document.getElementById("pauseSettingsButton").onclick=()=>openPauseMenuOverlay("settings");
+
+}
+
+
+/* =====================================================
+   GAME START
+===================================================== */
+
+function startGame(){
+
+    // Güvenli başlatma: düğmeye basıldığında önce oyun motorunun hazır olduğundan emin ol.
+    if(!scene || !renderer || !player || !clock){
+        console.warn("Oyun motoru henüz hazır değil; başlatma ertelendi.");
+        setTimeout(startGame, 100);
+        return;
+    }
+
+    // Güvenli başlatma: menüde takılı kalırsa state ve zamanlayıcıları
+    // her seferinde temiz bir oyun durumuna getir.
+    gameState = "playing";
+    if(clock) clock.getDelta();
+
+    clearGameObjects();
+
+    health=3;
+    coinCount=0;
+    score=0;
+    taskState={distance:0,coins:0,kills:0,score:0};
+    milestoneShown={};
+    neonLevel=0;
+    distance=0;
+
+    lane=1;
+    targetX=0;
+
+    verticalVelocity=0;
+    grounded=true;
+
+    gameSpeed=.42;
+
+    obstacleTimer=0;
+    coinTimer=0;
+
+    hitCooldown=0;
+
+    player.position.set(
+        0,
+        0,
+        3
+    );
+
+    gameState="playing";
+    if(clock) clock.start();
+
+    // Böcekler başlangıçta da görünür olsun.
+    for(let i=0;i<3;i++) spawnRoach();
+
+    document
+        .getElementById("menu")
+        .style.display="none";
+
+    document
+        .getElementById("gameOver")
+        .style.display="none";
+
+    document
+        .getElementById("pause")
+        .style.display="none";
+
+    const pauseBtn=document.getElementById("pauseButton");
+    if(pauseBtn) pauseBtn.textContent="⏸ DURDUR";
+
+    updateHUD();
+}
+
+
+function clearGameObjects(){
+
+    for(const obj of roaches) scene.remove(obj);
+    roaches.length=0;
+
+    for(const obj of obstacles)
+        scene.remove(obj);
+
+    for(const obj of coins)
+        scene.remove(obj);
+
+    obstacles.length=0;
+    coins.length=0;
+}
+
+
+/* =====================================================
+   PAUSE
+===================================================== */
+
+function togglePause(){
+
+    if(
+        gameState==="menu" ||
+        gameState==="gameover"
+    )
+        return;
+
+    const btn=document.getElementById("pauseButton");
+
+    if(gameState==="playing"){
+
+        gameState="paused";
+
+        document
+            .getElementById("pause")
+            .style.display="flex";
+
+        if(btn) btn.textContent="▶ DEVAM ET";
+
+    }else{
+
+        overlayFromPause=false;
+        gameState="playing";
+
+        document
+            .getElementById("pause")
+            .style.display="none";
+
+        if(btn) btn.textContent="⏸ DURDUR";
+    }
+}
+
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
+function gameOver(){
+
+    saveBankCoins();
+    gameState="gameover";
+
+    document
+        .getElementById("gameOver")
+        .style.display="flex";
+
+    document
+        .getElementById("result")
+        .innerHTML =
+        "⭐ Skor: <b>"+score+"</b><br>"+
+        "🪙 Coin: <b>"+(saveData.bankCoins||0)+"</b><br>"+
+        "📏 Mesafe: <b>"+
+        Math.floor(distance)+
+        " metre</b>";
+}
+
+
+/* =====================================================
+   COLLISION
+===================================================== */
+
+function collisionUpdate(){
+
+    if(hitCooldown>0)
+        return;
+
+    tempBox1.setFromObject(
+        player
+    );
+
+
+    for(
+        let i=obstacles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const obstacle =
+            obstacles[i];
+
+        tempBox2.setFromObject(
+            obstacle
+        );
+
+        if(
+            tempBox1.intersectsBox(
+                tempBox2
+            )
+        ){
+
+            scene.remove(obstacle);
+
+            obstacles.splice(
+                i,
+                1
+            );
+
+            health--;
+
+            hitCooldown=.9;
+
+            createHitEffect();
+
+            updateHUD();
+
+            if(health<=0){
+
+                gameOver();
+            }
+
+            break;
+        }
+    }
+
+
+    for(
+        let i=coins.length-1;
+        i>=0;
+        i--
+    ){
+
+        const coin =
+            coins[i];
+
+        tempBox2.setFromObject(
+            coin
+        );
+
+        if(
+            tempBox1.intersectsBox(
+                tempBox2
+            )
+        ){
+
+            scene.remove(coin);
+
+            coins.splice(
+                i,
+                1
+            );
+
+            coinCount++;
+            taskState.coins++;
+
+            score+=150;
+
+            for(let j=0;j<10;j++){
+
+                createParticle(
+                    coin.position,
+                    0xffd000
+                );
+            }
+
+            updateHUD();
+        }
+    }
+}
+
+
+/* =====================================================
+   HIT EFFECT
+===================================================== */
+
+function createHitEffect(){
+
+    for(let i=0;i<18;i++){
+
+        createParticle(
+            player.position,
+            0xff174f
+        );
+    }
+
+    player.position.x =
+        targetX;
+
+}
+
+
+/* =====================================================
+   UPDATE PLAYER
+===================================================== */
+
+function updatePlayer(dt){
+
+    /* yatay hareket */
+
+    player.position.x +=
+        (
+            targetX -
+            player.position.x
+        ) * Math.min(
+            1,
+            dt*12
+        );
+
+
+    /* zıplama */
+
+    verticalVelocity -=
+        dt*.9;
+
+    player.position.y +=
+        verticalVelocity;
+
+
+    if(player.position.y<=0){
+
+        player.position.y=0;
+
+        verticalVelocity=0;
+
+        grounded=true;
+    }
+
+
+    /* koşu animasyonu */
+
+    animationTime +=
+        dt * 12;
+
+    const run =
+        Math.sin(
+            animationTime
+        );
+
+    player.leftLeg.rotation.x =
+        run*.65;
+
+    player.rightLeg.rotation.x =
+        -run*.65;
+
+    player.leftArm.rotation.x =
+        -run*.55;
+
+    player.rightArm.rotation.x =
+        run*.55;
+
+
+    /* zıplarken animasyonu azalt */
+
+    if(!grounded){
+
+        player.leftLeg.rotation.x=.1;
+        player.rightLeg.rotation.x=.1;
+
+        player.leftArm.rotation.x=-.2;
+        player.rightArm.rotation.x=.2;
+    }
+}
+
+
+/* =====================================================
+   UPDATE WORLD
+===================================================== */
+
+function updateWorld(dt){
+  if(attackCooldown>0) attackCooldown=Math.max(0,attackCooldown-dt);
+  if(attackTimer>0){ attackTimer=Math.max(0,attackTimer-dt); if(attackTimer===0 && player?.userData.attackSword){ player.userData.attackSword.rotation.z=-.18; player.userData.attackSword.position.x=-.92; } }
+
+
+    const move =
+        gameSpeed *
+        dt *
+        60;
+
+
+    for(const segment of roadSegments){
+
+        segment.position.z += move;
+
+        if(segment.position.z>32){
+
+            segment.position.z -=
+                12*32;
+        }
+    }
+
+
+    for(
+        let i=buildings.length-1;
+        i>=0;
+        i--
+    ){
+
+        const building =
+            buildings[i];
+
+        building.position.z += move;
+
+        if(
+            building.position.z>35
+        ){
+
+            building.position.z -=
+                45*7;
+        }
+    }
+
+
+    for(
+        let i=obstacles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const obstacle =
+            obstacles[i];
+
+        obstacle.position.z += move;
+
+        if(
+            obstacle.position.z>15
+        ){
+
+            scene.remove(
+                obstacle
+            );
+
+            obstacles.splice(i,1);
+        }
+    }
+
+
+    for(
+        let i=coins.length-1;
+        i>=0;
+        i--
+    ){
+
+        const coin =
+            coins[i];
+
+        coin.position.z += move;
+
+        coin.rotation.y +=
+            dt*5;
+
+        if(
+            coin.position.z>15
+        ){
+
+            scene.remove(coin);
+
+            coins.splice(i,1);
+        }
+    }
+
+
+    updateRoaches(dt,move);
+
+    /* böcekler */
+    if(roaches.length < (PERF.mobile ? 6 : 10) && Math.random()<dt*(PERF.mobile ? .34 : .48)) spawnRoach();
+
+    /* yeni engeller */
+
+    obstacleTimer += dt;
+
+    if(
+        obstacleTimer >
+        Math.max(
+            .72,
+            1.45 -
+            distance*.0004
+        )
+    ){
+
+        spawnObstacle();
+
+        obstacleTimer=0;
+    }
+
+
+    /* coin */
+
+    coinTimer += dt;
+
+    if(coinTimer>0.82){
+
+        spawnCoin();
+
+        coinTimer=0;
+    }
+
+
+    /* hız artışı */
+
+    gameSpeed +=
+        dt*.004;
+
+    if(gameSpeed>1.15)
+        gameSpeed=1.15;
+
+
+    distance +=
+        move*.08;
+
+    score +=
+        Math.floor(
+            move*.15
+        );
+}
+
+
+/* =====================================================
+   CAMERA
+===================================================== */
+
+function updateCamera(dt){
+
+    const shake =
+        hitCooldown>0
+        ? Math.sin(
+            performance.now()*.08
+        )*.08
+        : 0;
+
+
+    camera.position.x +=
+        (
+            player.position.x -
+            camera.position.x
+        ) * dt*5;
+
+
+    camera.position.y +=
+        (
+            5.15 +
+            player.position.y*.3 -
+            camera.position.y
+        ) * dt*5;
+
+
+    camera.position.z +=
+        (
+            9 -
+            camera.position.z
+        ) * dt*5;
+
+
+    camera.position.x +=
+        shake;
+
+
+    camera.lookAt(
+        player.position.x,
+        1.35 +
+        player.position.y*.25,
+        -8
+    );
+}
+
+
+/* =====================================================
+   HUD
+===================================================== */
+
+function updateHUD(){
+
+    milestoneCheck();
+    const total=(saveData.bankCoins||0)+coinCount;
+    updateShopCoinDisplay();
+    document.getElementById("totalCoins").textContent=total;
+    document
+        .getElementById("health")
+        .textContent=health;
+
+    document
+        .getElementById("coins")
+        .textContent=coinCount;
+
+    document
+        .getElementById("score")
+        .textContent=score;
+
+    document
+        .getElementById("distance")
+        .textContent=
+        Math.floor(distance);
+
+    document
+        .getElementById("speed")
+        .textContent=
+        (gameSpeed/.42)
+        .toFixed(1);
+}
+
+
+/* =====================================================
+   LOOP
+===================================================== */
+
+function loop(){
+
+    requestAnimationFrame(loop);
+
+    const dt = Math.min(clock.getDelta(), .033);
+
+    if(gameState==="playing"){
+
+        hitCooldown -= dt;
+        if(hitCooldown<0) hitCooldown=0;
+
+        updatePlayer(dt);
+        updateWorld(dt);
+        collisionUpdate();
+        updateCamera(dt);
+        updateParticles(dt);
+
+        /* HUD: 10 updates/sec is enough and removes needless DOM work. */
+        hudTimer += dt;
+        if(hudTimer >= .10){
+            updateHUD();
+            hudTimer = 0;
+        }
+
+        /* Missions: once per second instead of rebuilding HTML every frame. */
+        taskTimer += dt;
+        if(taskTimer >= 1){
+            taskState.distance = distance;
+            taskState.score = score;
+            updateTasks();
+            taskTimer = 0;
+        }
+    }
+
+    if(PERF.mobile){
+        PERF.fpsTimer += dt; PERF.fpsFrames++;
+        if(PERF.fpsTimer >= 2){
+            const fps=PERF.fpsFrames/PERF.fpsTimer;
+            const maxRatio=PERF.lowPower ? .82 : 1;
+            if(fps < 42 && PERF.pixelRatio > .58) PERF.pixelRatio=Math.max(.58,PERF.pixelRatio-.10);
+            else if(fps > 57 && PERF.pixelRatio < maxRatio) PERF.pixelRatio=Math.min(maxRatio,PERF.pixelRatio+.05);
+            renderer.setPixelRatio(PERF.pixelRatio);
+            PERF.fpsTimer=0; PERF.fpsFrames=0;
+        }
+    }
+    renderer.render(scene,camera);
+}
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+function resize(){
+
+    camera.aspect =
+        window.innerWidth /
+        window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
+    renderer.setPixelRatio(PERF.pixelRatio);
+}
+
+
+/* =====================================================
+   BAŞLAT
+===================================================== */
+
+init();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ekobaba16.github.io/neon-n-nja-runner-3d/sitemap.xml
